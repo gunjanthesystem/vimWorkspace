@@ -1,0 +1,245 @@
+## Vim Tutor
+Progress update: Sun 12 Apr 2020 12:20:41 AM IST - finished until Lesson 2
+
+
+### See help on commane line e.g. to see what ':w' does	
+:help :w  
+
+## How to use Vundle Plugin Manager
+1: add "Plugin .... " to .vimrc
+2: source it "so %"
+3: :PluginInstall
+4: :PluginUpdate
+
+===================================
+Thu 06 Sep 2018 09:32:54 PM IST
+# Using netrw:
+===================================
+### vertical split full height, current working directory
+:help netrw
+:Lex
+:Lex! - opposite side
+:Hex - horizontal split
+:Hex! - opposite side
+:Sex - vertical split
+:Vex - vertical split
+:Sex! - horizontal split
+I - toggle banner
+s - cycle sort order between name, time (press r to reverse) or filesize
+a - cycle between all files, not hidden files or just hidden visible files
+gh - toggle hidden files on/off
+% - create a new file
+ - create a new directory
+R - rename/move file/directory
+D - delete file/directory under cursor (or marked files/dirs)
+- - go up one directory
+d - make a directory
+% - open a new file in current directory
+x - open file with an associated program
+i - change listing style (there is a tree listing as well)
+
+===================================
+# Resize windows
+===================================
+resize split windows - 	:resize +5
+						:resize 60
+						:vertical resize +5
+						:vertical resize 60
+
+Zoom in/out of windows - <c-w>o 
+
+===================================
+# Opening files inside vim
+===================================
+Option 1: find (supports tab completion)- 	:find path/to/file.txt   
+Opening files in vertical splits - 			:vs path/to/file.txt
+Opening files in horizontal splits - 		:sp path/to/file.txt
+Opening files in new tab - 					:tabnew path/to/file.txt
+
+===================================
+# Search
+===================================
+current exact word - 		: * 
+current not exact word - 	: g* 
+current word backward: 		: # 
+current word not exact backward: g# 
+fuzzy find your files -         :vs **/*<partial file name><Tab> 
+highlight occurences of current word in file (enabled by my vimrc settings)	: press F3, press <esc><esc> to clear highlighting or :set noh
+							
+## Search in file
+highlight by regex pattern -    :match Error /tooth/
+to see all available groups -   :highlight
+
+===================================
+# NAVIGATION
+===================================
+Navigating split windows -	Ctrl-w + h/j/k/l or arrow keys
+
+forces one buffer to scroll alongside another. e.g. split your window into two vertical panes - 
+															:set scrollbind 
+
+Position the curser at the top/middle/bottom -  h m l
+
+Show all open buffer with number - 	:buffers
+									:b <num of buffer to open>
+jump backward and forward in changelist -	g ;
+											g ,
+
+move to x% of file - 	x%  (borrowed from the Elvia Text Editor)
+
+Move in a long line - 	gj and gk for g<right arrow>
+						( )  (looks for .)
+
+move to start of word - w
+move to end of word	- 	e
+move to end of line	- 	$
+
+A number before the motion repeats it that many time
+move to start of 2nd word - 2w
+move to end of 3rd word - 	3e
+move to start of line - 	0
+
+find 'o' (go to first occurrence of 'o') in this line - 	fo 
+		 (go to char before first occurrence) - 			to
+find 'o' (go to previous occurrence of 'o') in this line - 	Fo 
+		 (go to char just before the previous occurence) - 	To
+
+Move to next/previous sentence: )/(
+toggle scroll bind of panes - :set scb!
+
+
+===================================
+# EDITING
+===================================
+move to new line after current line  and change to insert mode - 	o	
+move to new line before current line  and change to insert mode	- 	O	
+insert before the cursor -	i
+append after the line -		A
+
+delete word at cursor - 	dw
+delete from cursor to end of line - 	d$
+
+Many commands that change text are made from an operator and a motion. 
+operator	motion
+delete until the start of next word - 	dw
+delete to the end of current word - 	de 
+delete to the end of current line - 	d$
+
+Note:  pressing just the motion in Normal mode will move the cursor as specified. i.e.,
+move to start of word - w
+move to end of word	- 	e
+move to end of line	- 	$
+
+delete with count and motion - d number motion
+delete two words from current - d 2 w
+delete from current to end of line - d $
+
+delete a whole line - dd
+delete 2 lines from current - 2dd
+							 		
+
+- change (c) is analogue to delete (d), change deletes and changes to insert mode. Both take motion as arguments.
+- pressing a particular edit key twice, the effect is on the while line. E.g. 
+	- deletes characters for the motion - 	d motion 
+	- delete whole line -					dd 
+
+- Run arbitrary commands in Vim -	:ls -lF 
+									:! wc %
+ 									:%!astyle -A1
+(! to run bash command, % for current file, read to read output to file)
+
+- Insert output of command after current line:		:read !date
+- Insert output of command after line 2:			:2read !date
+
+
+- ------
+toggle comment (enabled by tcommnet plugin) - 	: gc{motion} or gcc (for current line) or gc (visual mode)
+
+===================================
+Inserting timestamp - :put =strftime('%c')  " mapped to Tab+Enter in vimrc
+Insert output of external program - :read !date  " will insert current timestamp https://vim.fandom.com/wiki/Append_output_of_an_external_command 
+
+Increment numbers -   Ctrl+a
+
+undo last change - 		u
+undo the whole line - 	U
+redo undone changes - 	Ctrl-r
+uno the undo's - 		Ctrl-R
+Reverse all changed in last modified line - 	U
+delete/cut - 		d,dd
+yank/copy - 		y,yy
+paste - 			p
+see undo tree (enabled by undotree) - F5
+
+## selected cut and paste
+1- position cursor at beginning of selection
+2- press:-
+	- v to select chars,
+	- V to select whole lines,
+	- Ctrl+v to select rectangular blocks
+3: move cursor to the end of selection
+4: press d to cut / y to copy
+5: move to where you want to past
+6: press P to paste before cursor, p to paste after.
+
+## Delete/yank from the current line to the marked one (inclusive)
+1- go to starting line of your block and type <m a> i.e. mark "a" 
+2- go to last line and ener <d ' a> (delete to mark a) or <y ' a> (yank to mark a)
+
+## Delete all lines in a file
+Starting from line 1 until the end (,$) of file, delete (d)-   :1,$d
+
+## Copy all lines in file to clipboar
+gg"*yG
+
+	gg		to get the cursor to the first character of the file    
+	"*y 	to start a yank command to the register * from the first line, until... 
+   	G 		to go the end of the file
+
+===================================
+
+## vim commands can be remembered as example
+CI}  - Change Inside CurlyBraces
+
+===========================================
+# Autocomplete
+===========================================
+builtin - 	Ctrl+n
+			<Ctrl+x><Ctrl+o>
+
+
+===========================================
+## for find file motions
+ctrlp.vim: full path fuzzy file finder
+:CtrlP or :CtrlP [starting-directory] 
+<c-p> set as shortcut to type CtrlP
+===========================================
+
+
+===========================================
+# Display
+===========================================
+## Display whitespace
+toggle display of whitespace - 	:set list!
+reset listchars - 				:set listchars&
+set listchars (alternative) - 	:set list listchars=tab:>-,eol:¶
+change color scheme			- 	Press F8 (next color scheme), Press Shift+F8 (previous color scheme)
+
+===========================================
+open terminal
+:term
+
+
+===========================================
+# Code formatting
+===========================================
+format code using astyle-		:%!astyle -A1
+when using autoformat - 		:Autoformat
+
+
+
+
+## References:
+netrw:      https://shapeshed.com/vim-netrw/
+ctrpl.vim:  https://github.com/ctrlpvim/ctrlp.vim
+highlight:  https://stackoverflow.com/questions/4162664/vim-highlight-a-list-of-words
